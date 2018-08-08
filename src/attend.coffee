@@ -10,29 +10,57 @@ nodemailer = require "nodemailer"
 xoauth2 = require "xoauth2"
 yaml = require "node-yaml"
 
-transport = nodemailer.createTransport
-  host: "smtp.host.example.com" # FIXME: Your SMTP Host
-  port: 465
-  secure: true
-  auth:
-    user: "smtp-username" # FIXME: Your SMTP username/password
-    pass: "smtp-password"
+loadSettingYaml = (configYamlPath) ->
+  yaml.readSync configYamlPath,
+    encoding: "utf8"
+    schema: yaml.schema.defaultSafe, (err, setting) ->
+      try
+        console.log setting
+        return setting
+      catch error
+        throw error
 
-
-loadUserList = (configYamlPath) ->
-  yaml.read configYamlPath,
+loadUserYaml = (configYamlPath) ->
+  yaml.readSync configYamlPath,
     encoding: "utf8"
     schema: yaml.schema.defaultSafe, (err, userList) ->
-    try
-      console.log data
-    catch error
-      throw error
+      try
+        console.log userList
+        return userList
+      catch error
+        throw error
 
+getMailServerConf = ->
+  setting = loadSettingYaml "config/settings.yaml"
+  return setting["mailServer"]
 
-sendMail = (mail, name, text)->
+getSendTo = ->
+  setting = loadSettingYaml "config/settings.yaml"
+  return setting["sendto"]
+
+getUserInfo = (username) ->
+  userInfo = loadUserYaml "config/user.yaml"
+  return userInfo[username]
+
+createMailerTransport = ->
+  mailServerConf = getMailServerConf()
+
+  transport = nodemailer.createTransport
+    host: mailServerConf["host"]
+    port: mailServerConf["port"]
+    secure: mailServerConf["secure"]
+    auth:
+      user: mailServerConf["user"]
+      pass: mailServerConf["pass"]
+
+  return transport
+
+sendMail = (from, name, text)->
+  sendTo = getSendTo()
+  transport = createMailerTransport()
   mailData =
-    from   : "#{name} <#{mail}>"
-    to     : "<example@example.com>"
+    from   : "#{name} <#{from}>"
+    to     : "<#{sendTo}>"
     subject: "勤怠連絡 #{name}"
     text   : "#{text}"
   console.log mailData
@@ -42,22 +70,14 @@ sendMail = (mail, name, text)->
   catch error
     throw error
   finally
-    transport.close()
-
-
-
-getUserFullName = (username) ->
-  return userList[username].fullName
-
-getUserMail = (username) ->
-  return userList[username].mail
-
+    transport.close
 
 module.exports = (robot) ->
   robot.respond /勤怠(.*)/i, (msg) ->
     username = msg.message.user.name
-    fullName = getUserFullName(username)
-    mail = getUserMail(username)
+    userInfo = getUserInfo username
+    fullName = userInfo["fullName"]
+    mail = userInfo["mail"]
     text = msg.match[1]
 
     try

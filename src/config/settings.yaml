@@ -1,0 +1,8 @@
+mailServer:
+  host: exampleHost
+  port: 465
+  secure: true
+  user: smtpUser
+  pass: smtpPass
+
+sendto: sendtoMailAddress

@@ -6,6 +6,14 @@ Send attend mails using Slack They talk to Hubot.
 
 ## Setup
 
+* Build docker image
+
+```
+$ docker build -f dockerfile/Dockerfile -t hubot:latest . 
+```
+
+* 
+
 # Licence
 This software is released under the MIT License, see LICENSE.
 

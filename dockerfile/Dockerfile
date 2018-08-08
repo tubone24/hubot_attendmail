@@ -13,7 +13,7 @@ USER bot
 WORKDIR /home/bot
 RUN  yo hubot --owner "tubone" --name "bot" --description "Hubot image" --adapter slack
 
-COPY src/attend.coffee scripts/attend.coffee
+COPY src/ scripts/
 
-ENV HUBOT_SLACK_TOKEN xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-CMD cd /home/bot/hubot; bin/hubot --adapter slack
+ENV HUBOT_SLACK_TOKEN xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+CMD bin/hubot --adapter slack
