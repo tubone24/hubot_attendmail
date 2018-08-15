@@ -61,7 +61,7 @@ $ docker run -d --name hubot hubot:latest
 
 * Send attend mail. Have a nice holiday!
 
-![send_attend](https://github.com/tubone24/hubot_attendmail/docs/send_attend.png "send attend")
+![send_attend](https://raw.githubusercontent.com/tubone24/hubot_attendmail/master/docs/send_attend.png "send attend")
 
 # Licence
 This software is released under the MIT License, see LICENSE.
