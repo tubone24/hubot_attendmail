@@ -1,4 +1,7 @@
 # Hubot Slack to attend mail plugin
+
+![header](./docs/header.png)
+
 Send attend mails using Slack you only talk to Hubot.
 
 ## Dependency
@@ -29,7 +32,7 @@ slack-user: # Slack username(@mention name)
   mail: User mail address
 ```
 
-* Get HUBOT_SLACK_TOKEN to Slack Admin console and set ENV value for Dockerfile 
+* Get HUBOT_SLACK_TOKEN to Slack Admin console and set ENV value for Dockerfile
 
 ```
 ENV HUBOT_SLACK_TOKEN xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -38,7 +41,7 @@ ENV HUBOT_SLACK_TOKEN xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 * Build docker image
 
 ```
-$ docker build -f dockerfile/Dockerfile -t hubot:latest . 
+$ docker build -f dockerfile/Dockerfile -t hubot:latest .
 ```
 
 * Run docker container
@@ -57,7 +60,7 @@ $ docker run -d --name hubot hubot:latest
 
 * Run container.
 
-* Talk to (@mention) hubot attend reaso,  start from "勤怠" 
+* Talk to (@mention) hubot attend reaso,  start from "勤怠"
 
 * Send attend mail. Have a nice holiday!
 
